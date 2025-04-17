@@ -85,10 +85,8 @@ class ReceivablePayableReport:
 				self.skip_total_row = 1
 
 	def get_data(self):
-		self.get_ple_entries()
 		self.get_sales_invoices_or_customers_based_on_sales_person()
 		self.voucher_balance = OrderedDict()
-		self.init_voucher_balance()  # invoiced, paid, credit_note, outstanding
 
 		# Build delivery note map against all sales invoices
 		self.build_delivery_note_map()
@@ -107,8 +105,15 @@ class ReceivablePayableReport:
 
 		self.data = []
 
-		for ple in self.ple_entries:
-			self.update_voucher_balance(ple)
+		self.last_key = None
+		while True:
+			self.get_ple_entries()
+			if not self.last_key:
+				break
+			self.init_voucher_balance()  # invoiced, paid, credit_note, outstanding
+
+			for ple in self.ple_entries:
+				self.update_voucher_balance(ple)
 
 		self.build_data()
 
@@ -765,8 +770,7 @@ class ReceivablePayableReport:
 		row["range" + str(index + 1)] = row.outstanding
 
 	def get_ple_entries(self):
-		# get all the GL entries filtered by the given filters
-
+		# get all the PL entries filtered by the given filters
 		self.prepare_conditions()
 
 		if self.filters.show_future_payments:
@@ -812,12 +816,22 @@ class ReceivablePayableReport:
 			else:
 				query = query.select(ple.remarks)
 
-		if self.filters.get("group_by_party"):
-			query = query.orderby(self.ple.party, self.ple.posting_date)
-		else:
-			query = query.orderby(self.ple.posting_date, self.ple.party)
+		if self.last_key:
+			query = query.where(ple.name.gt(self.last_key))
+
+		query = query.orderby(self.ple.name)
+		query = query.limit(5)
 
 		self.ple_entries = query.run(as_dict=True)
+
+		# get last_key
+		self.last_key = self.ple_entries[-1].name if self.ple_entries else None
+
+		# order after fetch to maintain desc order in report output
+		if self.filters.get("group_by_party"):
+			self.ple_entries.sort(key=lambda x: (x.party, x.posting_date))
+		else:
+			self.ple_entries.sort(key=lambda x: (x.posting_date, x.party))
 
 	def get_sales_invoices_or_customers_based_on_sales_person(self):
 		if self.filters.get("sales_person"):
