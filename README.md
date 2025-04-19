@@ -1,3 +1,124 @@
+## Việc cần làm
+**1️⃣ Cloud Platform Setup (GCP Free Tier)** 
+ 
+- Create a **GCP project**  and enable billing.
+ 
+- Set up **IAM roles**  for team members.
+ 
+- Enable required **GCP services**  (Compute Engine, Kubernetes, Cloud SQL, etc.).
+ 
+- Configure **budget alerts**  to prevent unexpected charges.
+
+**2️⃣ Containerization & Deployment** 
+ 
+- **Dockerize ERPNext**  and push to **Google Container Registry (GCR)** .
+ 
+- Create a **GKE Autopilot cluster** .
+ 
+- Write **Kubernetes deployment YAML**  for ERPNext.
+ 
+- Deploy ERPNext **as a pod**  in GKE.
+
+**3️⃣ Authentication (SSO)** 
+ 
+- Set up **Auth0**  for authentication.
+ 
+- Configure **OAuth2, SAML, JWT**  authentication.
+ 
+- Integrate Auth0 with **ERPNext login** .
+ 
+- Store **SSO credentials securely**  in Secret Manager.
+
+**4️⃣ API Management** 
+ 
+- Deploy **Kong API Gateway**  as a Kubernetes service.
+ 
+- Configure **rate limiting**  and **authentication**  rules.
+ 
+- Secure **API endpoints**  used by ERPNext.
+ 
+- Route API traffic through **Kong** .
+
+**5️⃣ CI/CD Automation** 
+ 
+- Set up **GitHub Actions**  to automate builds and deployments.
+ 
+- Write **CI/CD scripts**  for ERPNext container builds.
+ 
+- Automate Kubernetes deployment using **GitHub Actions** .
+ 
+- Monitor and debug pipeline execution.
+
+**6️⃣ Database Setup** 
+ 
+- Deploy **Google Cloud SQL (PostgreSQL Free Tier)** .
+ 
+- Configure **database connections**  for ERPNext.
+ 
+- Set up **automatic backups**  for the database.
+ 
+- Optimize **database performance settings** .
+
+**7️⃣ Caching & Session Management** 
+ 
+- Deploy **Google Cloud Memorystore (Redis Free Tier)** .
+ 
+- Configure ERPNext to use Redis for **session storage** .
+ 
+- Optimize **Redis caching strategies** .
+ 
+- Monitor **Redis performance** .
+
+**8️⃣ Logging & Monitoring** 
+ 
+- Enable **Google Cloud Operations Suite (Stackdriver)** .
+ 
+- Configure **log collection**  for ERPNext & API Gateway.
+ 
+- Set up **alerts**  for errors, crashes, and performance issues.
+ 
+- Create **dashboards for monitoring**  Kubernetes & database.
+
+**9️⃣ Secrets Management** 
+ 
+- Store **SSO credentials, API keys, and DB passwords**  in **Google Secret Manager** .
+ 
+- Configure **ERPNext & API Gateway**  to access secrets.
+ 
+- Set up **automatic secret rotation policies** .
+
+**🔟 Backup & Disaster Recovery** 
+ 
+- Configure **Persistent Volume Snapshots**  for database backups.
+ 
+- Automate **daily and weekly backup schedules** .
+ 
+- Document **backup recovery process** .
+
+**1️⃣1️⃣ Load Balancing & Auto-Scaling** 
+ 
+- Deploy **Google Cloud Load Balancer** .
+ 
+- Configure **ingress rules**  for ERPNext and API services.
+ 
+- Set up **Horizontal Pod Autoscaler (HPA)**  to scale pods.
+ 
+- Test **auto-scaling**  based on CPU usage.
+
+| Task | Bach (Infrastructure) | Vy Anh (Application & API) | Sieu thi (DevOps & Security) | 
+| --- | --- | --- | --- | 
+| 1. Cloud Platform Setup (GCP, IAM, Billing) | ✅ |  |  | 
+| 2. Containerization & Deployment (Docker, GKE) | ✅ |  |  | 
+| 3. Authentication (SSO - Auth0 Integration) |  | ✅ |  | 
+| 4. API Management (Kong Gateway, API Security) |  | ✅ |  | 
+| 5. CI/CD Automation (GitHub Actions, Deployment Pipelines) |  |  | ✅ | 
+| 6. Database (Cloud SQL PostgreSQL) | ✅ |  |  | 
+| 7. Caching & Session Management (Redis) |  | ✅ |  | 
+| 8. Logging & Monitoring (Stackdriver, Alerts, Dashboards) |  |  | ✅ | 
+| 9. Secrets Management (Google Secret Manager) |  | ✅ |  | 
+| 10. Backup & Disaster Recovery (Persistent Volume Snapshots, Restore Plans) |  |  | ✅ | 
+| 11. Load Balancing & Auto-Scaling (GCP Load Balancer, HPA) |  |  | ✅ | 
+
 <div align="center">
     <a href="https://erpnext.com">
         <img src="https://raw.githubusercontent.com/frappe/erpnext/develop/erpnext/public/images/erpnext-logo.png" height="128">
